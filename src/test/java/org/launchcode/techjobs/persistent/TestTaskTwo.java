@@ -4,14 +4,12 @@ import mockit.Expectations;
 import mockit.Mocked;
 import org.junit.jupiter.api.Test;
 import org.launchcode.techjobs.persistent.controllers.EmployerController;
-import org.launchcode.techjobs.persistent.models.Employer;
-import org.launchcode.techjobs.persistent.models.Skill;
+import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,12 +20,9 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -330,63 +325,63 @@ public class TestTaskTwo extends AbstractTest {
     /*
     * Verifies that the employerRepository field is correctly defined
     * */
-//    @Test
-//    public void testEmployerRepositoryDefinition () throws ClassNotFoundException {
-//        Class employerController = getClassByName("controllers.EmployerController");
-//        Field employerRepositoryField = null;
-//
-//        try {
-//            employerRepositoryField = employerController.getDeclaredField("employerRepository");
-//        } catch (NoSuchFieldException e) {
-//            fail("EmployerController does not have an employerRepository field");
-//        }
-//
-//        assertEquals(EmployerRepository.class, employerRepositoryField.getType(), "employerRepository must be of type EmployerRepository");
-//        assertNotNull(employerRepositoryField.getAnnotation(Autowired.class), "employerRepository must have the @Autowired annotation");
-//    }
+    @Test
+    public void testEmployerRepositoryDefinition () throws ClassNotFoundException {
+        Class employerController = getClassByName("controllers.EmployerController");
+        Field employerRepositoryField = null;
+
+        try {
+            employerRepositoryField = employerController.getDeclaredField("employerRepository");
+        } catch (NoSuchFieldException e) {
+            fail("EmployerController does not have an employerRepository field");
+        }
+
+        assertEquals(EmployerRepository.class, employerRepositoryField.getType(), "employerRepository must be of type EmployerRepository");
+        assertNotNull(employerRepositoryField.getAnnotation(Autowired.class), "employerRepository must have the @Autowired annotation");
+    }
 
     /*
     * Verifies that EmployerController.index is properly defined
     * */
-//    @Test
-//    public void testEmployerControllerIndexMethodDefinition (@Mocked EmployerRepository employerRepository) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-//        Class employerControllerClass = getClassByName("controllers.EmployerController");
-//        Method indexMethod = null;
-//
-//        // Verify that the index method exists
-//        try {
-//            indexMethod = employerControllerClass.getMethod("index", Model.class);
-//        } catch (NoSuchMethodException e) {
-//            fail("EmployerController must have an index method that takes a parameter of type Model");
-//        }
-//
-//        Annotation annotation = indexMethod.getDeclaredAnnotation(RequestMapping.class);
-//
-//        // Verify that index has a routing annotation. We need to accommodate
-//        // both @RequestMapping and @GetMapping.
-//        if (annotation == null) {
-//            annotation = indexMethod.getDeclaredAnnotation(GetMapping.class);
-//        }
-//
-//        assertNotNull(annotation, "index method must have a routing annotation");
-//
-//        Method annotationValueMethod = annotation.getClass().getMethod("value");
-//        String[] values = ((String[]) annotationValueMethod.invoke(annotation));
-//        assertEquals(1, values.length, "The routing annotation for index must have a value");
-//        assertEquals("", values[0], "The value parameter for the routing annotation must be the empty string");
-//
-//        // Verify that index calls employerRepository.findAll()
-//        new Expectations() {{
-//            employerRepository.findAll();
-//        }};
-//
-//        Model model = new ExtendedModelMap();
-//        EmployerController employerController = new EmployerController();
-//        Field employerRepositoryField = employerControllerClass.getDeclaredField("employerRepository");
-//        employerRepositoryField.setAccessible(true);
-//        employerRepositoryField.set(employerController, employerRepository);
-//        indexMethod.invoke(employerController, model);
-//    }
+    @Test
+    public void testEmployerControllerIndexMethodDefinition (@Mocked EmployerRepository employerRepository) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+        Class employerControllerClass = getClassByName("controllers.EmployerController");
+        Method indexMethod = null;
+
+        // Verify that the index method exists
+        try {
+            indexMethod = employerControllerClass.getMethod("index", Model.class);
+        } catch (NoSuchMethodException e) {
+            fail("EmployerController must have an index method that takes a parameter of type Model");
+        }
+
+        Annotation annotation = indexMethod.getDeclaredAnnotation(RequestMapping.class);
+
+        // Verify that index has a routing annotation. We need to accommodate
+        // both @RequestMapping and @GetMapping.
+        if (annotation == null) {
+            annotation = indexMethod.getDeclaredAnnotation(GetMapping.class);
+        }
+
+        assertNotNull(annotation, "index method must have a routing annotation");
+
+        Method annotationValueMethod = annotation.getClass().getMethod("value");
+        String[] values = ((String[]) annotationValueMethod.invoke(annotation));
+        assertEquals(1, values.length, "The routing annotation for index must have a value");
+        assertEquals("", values[0], "The value parameter for the routing annotation must be the empty string");
+
+        // Verify that index calls employerRepository.findAll()
+        new Expectations() {{
+            employerRepository.findAll();
+        }};
+
+        Model model = new ExtendedModelMap();
+        EmployerController employerController = new EmployerController();
+        Field employerRepositoryField = employerControllerClass.getDeclaredField("employerRepository");
+        employerRepositoryField.setAccessible(true);
+        employerRepositoryField.set(employerController, employerRepository);
+        indexMethod.invoke(employerController, model);
+    }
 
     /*
     * Verify that processAddEmployerForm saves a new employer to the database
