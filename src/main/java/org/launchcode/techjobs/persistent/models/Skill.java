@@ -8,8 +8,11 @@ import javax.validation.constraints.Size;
 public class Skill extends AbstractEntity {
     // Ensures location is not blank
     @NotBlank
-    @Size(min=5)
+    @Size(min=3)
     private String description;
+
+    // Constructor
+    public Skill() {}
 
     public String getDescription() {
         return description;

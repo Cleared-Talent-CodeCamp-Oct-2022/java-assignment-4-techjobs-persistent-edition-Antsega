@@ -32,11 +32,11 @@ public class EmployerController {
     }
 
     @PostMapping("add")
-    public String processAddEmployerForm(Model model, @ModelAttribute @Valid Employer newEmployer,
-                                    Errors errors) {
+    public String processAddEmployerForm(@ModelAttribute @Valid Employer newEmployer,
+                                    Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("employer","The employer must contain at least 3 characters");
+            model.addAttribute("employer",newEmployer);
             return "employers/add";
         }
         // add to employer list
