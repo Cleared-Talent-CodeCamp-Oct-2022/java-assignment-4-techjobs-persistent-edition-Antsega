@@ -1,13 +1,15 @@
 package org.launchcode.techjobs.persistent.models;
 
 import javax.persistence.*;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Job extends AbstractEntity {
 
-    @ManyToOne(mappedBy = "EmployerController");
+    @ManyToOne
     private Employer employer;
 
+    @ManyToOne
     private String skills;
 
     public Job() {
