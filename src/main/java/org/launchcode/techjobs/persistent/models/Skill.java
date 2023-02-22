@@ -19,7 +19,7 @@ public class Skill extends AbstractEntity {
 
     // list cannot change
     @ManyToMany(mappedBy = "skills")
-    private final List<Job> jobs = new ArrayList<>();
+    private List<Job> jobs = new ArrayList<>();
 
     public String getDescription() {
         return description;
