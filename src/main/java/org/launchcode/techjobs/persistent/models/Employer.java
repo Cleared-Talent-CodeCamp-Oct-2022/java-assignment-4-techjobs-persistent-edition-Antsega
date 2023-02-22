@@ -29,4 +29,5 @@ public class Employer extends AbstractEntity {
     public List<Job> getJobs() {
         return jobs;
     }
+
 }

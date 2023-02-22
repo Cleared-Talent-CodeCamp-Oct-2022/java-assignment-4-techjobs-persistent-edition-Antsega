@@ -22,6 +22,8 @@ public class HomeController {
 
     @Autowired
     private EmployerRepository employerRepository;
+
+    @Autowired
     private SkillRepository skillRepository;
 
     @Autowired
@@ -40,8 +42,7 @@ public class HomeController {
         model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
-//        model.addAttribute("skills", skillRepository.findAll());
-        // pass in the list of all the skills from the database to the page is said method?
+        model.addAttribute("skills", skillRepository.findAll());
         return "add";
     }
 

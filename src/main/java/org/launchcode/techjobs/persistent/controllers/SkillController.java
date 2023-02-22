@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("skills")
@@ -45,17 +43,17 @@ public class SkillController {
         return "redirect:";
     }
 
-//    @GetMapping("view/{employerId}")
-//    public String displayViewSkill(Model model, @PathVariable int employerId) {
-//
-//        // searches through the repository and selects user's input to search
-//        Optional optEmployer = skillRepository.findById(employerId);
-//        if (optEmployer.isPresent()) {
-//            Skill skill = (Skill) optEmployer.get();
-//            model.addAttribute("skill", skill);
-//            return "skills/view";
-//        } else {
-//            return "redirect:../";
-//        }
-//    }
+    @GetMapping("view/{employerId}")
+    public String displayViewSkill(Model model, @PathVariable int employerId) {
+
+        // searches through the repository and selects user's input to search
+        Optional optEmployer = skillRepository.findById(employerId);
+        if (optEmployer.isPresent()) {
+            Skill skill = (Skill) optEmployer.get();
+            model.addAttribute("skill", skill);
+            return "skills/view";
+        } else {
+            return "redirect:../";
+        }
+    }
  }
