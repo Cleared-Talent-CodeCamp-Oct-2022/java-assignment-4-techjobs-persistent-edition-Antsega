@@ -1,6 +1,5 @@
 package org.launchcode.techjobs.persistent.controllers;
 
-import org.launchcode.techjobs.persistent.models.Employer;
 import org.launchcode.techjobs.persistent.models.Job;
 import org.launchcode.techjobs.persistent.models.data.EmployerRepository;
 import org.launchcode.techjobs.persistent.models.data.JobRepository;
@@ -33,7 +32,7 @@ public class HomeController {
     public String index(Model model) {
 
         model.addAttribute("title", "My Jobs");
-
+        model.addAttribute("jobs", jobRepository.findAll());
         return "index";
     }
 
@@ -61,11 +60,11 @@ public class HomeController {
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
-// searches through the repository and selects user's input to search
-        Optional optEmployer = employerRepository.findById(jobId);
+        // searches through the repository and selects jobId by Href
+        Optional optEmployer = jobRepository.findById(jobId);
         if (optEmployer.isPresent()) {
-            Employer employer = (Employer) optEmployer.get();
-            model.addAttribute("employer", employer);
+            Job job = (Job) optEmployer.get();
+            model.addAttribute("job", job);
             return "view";
         }
         else {

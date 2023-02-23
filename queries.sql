@@ -8,6 +8,10 @@
 --      FROM techjobs.employer
 --      WHERE location = "St.Louis City"
 -- Part 3: Test it with SQL
---      DROP table
+--      DROP TABLE job, job_skills;
 -- Part 4: Test it with SQL
---
+--  SELECT S.name, S.description, J.name as Job_name
+--  FROM techjobs.skill as S
+--  INNER JOIN techjobs.job_skills as JS on JS.skills_id = S.id
+--  INNER JOIN job as J on JS.jobs_id = J.id
+--  ORDER BY S.name ASC;

@@ -20,7 +20,7 @@ public class Employer extends AbstractEntity {
 
     // list cannot change
     @OneToMany(mappedBy = "employer")
-    private final List<Job> jobs = new ArrayList<>();
+    private List<Job> jobs = new ArrayList<>();
 
     // Get/Setters
     public String getLocation() {return this.location;}
